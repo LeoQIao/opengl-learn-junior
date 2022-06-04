@@ -1,5 +1,9 @@
 #include <Windows.h>
+#include <gl/GL.h>
+#include <gl/GLU.h>
 
+#pragma comment(lib, "opengl32.lib")
+#pragma comment(lib, "glu32.lib")
 
 
 LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -30,7 +34,7 @@ INT WINAPI WinMain(
     wndClass.cbSize = sizeof(WNDCLASSEX);
     wndClass.cbWndExtra = 0;
     wndClass.hbrBackground = NULL;
-    wndClass.hCursor = NULL;
+    wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
     wndClass.hIcon = NULL;
     wndClass.hIconSm = NULL;
     wndClass.hInstance = hInstance;
@@ -49,6 +53,35 @@ INT WINAPI WinMain(
     //创建窗口
     HWND hwnd = CreateWindowEx(NULL, L"GLWindow", L"OpenGL Window", WS_OVERLAPPEDWINDOW, 100, 100, 800, 600, NULL, NULL, hInstance, NULL);
 
+
+
+    //创建OPGL上下文
+    HDC dc = GetDC(hwnd);
+    PIXELFORMATDESCRIPTOR pfd;
+    memset(&pfd, 0, sizeof(PIXELFORMATDESCRIPTOR));
+
+    pfd.nVersion = 1;
+    pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
+    pfd.cColorBits = 32;
+    pfd.cDepthBits = 24;
+    pfd.cStencilBits = 8;
+    pfd.iPixelType = PFD_TYPE_RGBA;
+    pfd.iLayerType = PFD_MAIN_PLANE;
+    pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
+
+    int pixelFormat = ChoosePixelFormat(dc, &pfd);
+    SetPixelFormat(dc, pixelFormat, &pfd);
+
+    HGLRC rc = wglCreateContext(dc);
+    wglMakeCurrent(dc, rc);//Opengl设置完成
+
+
+    //opengl 初始化
+    glClearColor(0.1, 0.4, 0.6, 1.0); //设置背景的清除颜色
+
+
+
+
     //显示窗口
     ShowWindow(hwnd, SW_SHOW);
     UpdateWindow(hwnd);
@@ -66,6 +99,19 @@ INT WINAPI WinMain(
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
+
+
+        //绘制场景
+        glClear(GL_COLOR_BUFFER_BIT);
+
+
+
+
+        //展示场景
+        SwapBuffers(dc);
+
+
     }
+
     return 0;
 }
