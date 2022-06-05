@@ -120,6 +120,8 @@ INT WINAPI WinMain(
 
 		glBegin(GL_POINTS);//开始绘制
 		glVertex3f(0.0f, 0.0f, -0.5f);
+		glVertex3f(-5.0f, 0.0f, -10.0f);
+		glVertex3f(5.0f, 0.0f, -10.0f);
 		glEnd();//绘制结束
 
 
