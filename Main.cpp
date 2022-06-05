@@ -79,6 +79,15 @@ INT WINAPI WinMain(
     //opengl 初始化
     glClearColor(0.1, 0.4, 0.6, 1.0); //设置背景的清除颜色
 
+    //设置投影矩阵
+    glMatrixMode(GL_PROJECTION);//告诉显卡我们现在要操作我们的投影矩阵
+    gluPerspective(50.0f, 800.0f / 600.f, 0.1f, 1000.0f);
+
+    glMatrixMode(GL_MODELVIEW);//设置模型矩阵
+    glLoadIdentity();//设置为单位矩阵
+
+
+
 
 
 
