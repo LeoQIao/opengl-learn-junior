@@ -1,4 +1,4 @@
-#include <Windows.h>
+ï»¿#include <Windows.h>
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
@@ -8,119 +8,128 @@
 
 LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    switch (msg)
-    {
-    case WM_CLOSE:
-        PostQuitMessage(0);
-        break;
-    }
+	switch (msg)
+	{
+	case WM_CLOSE:
+		PostQuitMessage(0);
+		break;
+	}
 
-    return DefWindowProc(hwnd, msg, wParam, lParam);
+	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
 
 
 
 INT WINAPI WinMain(
-    _In_ HINSTANCE hInstance,
-    _In_opt_ HINSTANCE hPrevInstance,
-    _In_ LPSTR lpCmdLine,
-    _In_ int nShowCmd
+	_In_ HINSTANCE hInstance,
+	_In_opt_ HINSTANCE hPrevInstance,
+	_In_ LPSTR lpCmdLine,
+	_In_ int nShowCmd
 )
 {
-    //×¢²á´°¿Ú
-    WNDCLASSEX wndClass;
-    wndClass.cbClsExtra = 0;
-    wndClass.cbSize = sizeof(WNDCLASSEX);
-    wndClass.cbWndExtra = 0;
-    wndClass.hbrBackground = NULL;
-    wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-    wndClass.hIcon = NULL;
-    wndClass.hIconSm = NULL;
-    wndClass.hInstance = hInstance;
-    wndClass.lpfnWndProc = &GLWindowProc;
-    wndClass.lpszClassName = L"GLWindow";
-    wndClass.lpszMenuName = NULL;
-    wndClass.style = CS_VREDRAW | CS_HREDRAW;
+	//æ³¨å†Œçª—å£
+	WNDCLASSEX wndClass;
+	wndClass.cbClsExtra = 0;
+	wndClass.cbSize = sizeof(WNDCLASSEX);
+	wndClass.cbWndExtra = 0;
+	wndClass.hbrBackground = NULL;
+	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wndClass.hIcon = NULL;
+	wndClass.hIconSm = NULL;
+	wndClass.hInstance = hInstance;
+	wndClass.lpfnWndProc = &GLWindowProc;
+	wndClass.lpszClassName = L"GLWindow";
+	wndClass.lpszMenuName = NULL;
+	wndClass.style = CS_VREDRAW | CS_HREDRAW;
 
-    ATOM atom = RegisterClassEx(&wndClass);
-    if (!atom)
-    {
-        return 0;
-    }
-
-
-    //´´½¨´°¿Ú
-    HWND hwnd = CreateWindowEx(NULL, L"GLWindow", L"OpenGL Window", WS_OVERLAPPEDWINDOW, 100, 100, 800, 600, NULL, NULL, hInstance, NULL);
+	ATOM atom = RegisterClassEx(&wndClass);
+	if (!atom)
+	{
+		return 0;
+	}
 
 
-
-    //´´½¨OPGLÉÏÏÂÎÄ
-    HDC dc = GetDC(hwnd);
-    PIXELFORMATDESCRIPTOR pfd;
-    memset(&pfd, 0, sizeof(PIXELFORMATDESCRIPTOR));
-
-    pfd.nVersion = 1;
-    pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
-    pfd.cColorBits = 32;
-    pfd.cDepthBits = 24;
-    pfd.cStencilBits = 8;
-    pfd.iPixelType = PFD_TYPE_RGBA;
-    pfd.iLayerType = PFD_MAIN_PLANE;
-    pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
-
-    int pixelFormat = ChoosePixelFormat(dc, &pfd);
-    SetPixelFormat(dc, pixelFormat, &pfd);
-
-    HGLRC rc = wglCreateContext(dc);
-    wglMakeCurrent(dc, rc);//OpenglÉèÖÃÍê³É
+	//åˆ›å»ºçª—å£
+	HWND hwnd = CreateWindowEx(NULL, L"GLWindow", L"OpenGL Window", WS_OVERLAPPEDWINDOW, 100, 100, 800, 600, NULL, NULL, hInstance, NULL);
 
 
-    //opengl ³õÊ¼»¯
-    glClearColor(0.1, 0.4, 0.6, 1.0); //ÉèÖÃ±³¾°µÄÇå³ıÑÕÉ«
 
-    //ÉèÖÃÍ¶Ó°¾ØÕó
-    glMatrixMode(GL_PROJECTION);//¸æËßÏÔ¿¨ÎÒÃÇÏÖÔÚÒª²Ù×÷ÎÒÃÇµÄÍ¶Ó°¾ØÕó
-    gluPerspective(50.0f, 800.0f / 600.f, 0.1f, 1000.0f);
+	//åˆ›å»ºOPGLä¸Šä¸‹æ–‡
+	HDC dc = GetDC(hwnd);
+	PIXELFORMATDESCRIPTOR pfd;
+	memset(&pfd, 0, sizeof(PIXELFORMATDESCRIPTOR));
 
-    glMatrixMode(GL_MODELVIEW);//ÉèÖÃÄ£ĞÍ¾ØÕó
-    glLoadIdentity();//ÉèÖÃÎªµ¥Î»¾ØÕó
+	pfd.nVersion = 1;
+	pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
+	pfd.cColorBits = 32;
+	pfd.cDepthBits = 24;
+	pfd.cStencilBits = 8;
+	pfd.iPixelType = PFD_TYPE_RGBA;
+	pfd.iLayerType = PFD_MAIN_PLANE;
+	pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
+
+	int pixelFormat = ChoosePixelFormat(dc, &pfd);
+	SetPixelFormat(dc, pixelFormat, &pfd);
+
+	HGLRC rc = wglCreateContext(dc);
+	wglMakeCurrent(dc, rc);//Openglè®¾ç½®å®Œæˆ
 
 
+	//opengl åˆå§‹åŒ–
+	glClearColor(0.1, 0.4, 0.6, 1.0); //è®¾ç½®èƒŒæ™¯çš„æ¸…é™¤é¢œè‰²
+
+	//è®¾ç½®æŠ•å½±çŸ©é˜µ
+	glMatrixMode(GL_PROJECTION);//å‘Šè¯‰æ˜¾å¡æˆ‘ä»¬ç°åœ¨è¦æ“ä½œæˆ‘ä»¬çš„æŠ•å½±çŸ©é˜µ
+	gluPerspective(50.0f, 800.0f / 600.f, 0.1f, 1000.0f);
+
+	glMatrixMode(GL_MODELVIEW);//è®¾ç½®æ¨¡å‹çŸ©é˜µ
+	glLoadIdentity();//è®¾ç½®ä¸ºå•ä½çŸ©é˜µ
 
 
 
 
-    //ÏÔÊ¾´°¿Ú
-    ShowWindow(hwnd, SW_SHOW);
-    UpdateWindow(hwnd);
-
-    MSG msg;
-    while (true)
-    {
-        if (PeekMessage(&msg, NULL, NULL, NULL, PM_REMOVE))
-        {
-            if (msg.message == WM_QUIT)
-            {
-                break;
-            }
-
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
 
 
-        //»æÖÆ³¡¾°
-        glClear(GL_COLOR_BUFFER_BIT);
+	//æ˜¾ç¤ºçª—å£
+	ShowWindow(hwnd, SW_SHOW);
+	UpdateWindow(hwnd);
+
+	MSG msg;
+	while (true)
+	{
+		if (PeekMessage(&msg, NULL, NULL, NULL, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT)
+			{
+				break;
+			}
+
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
+
+		//ç»˜åˆ¶åœºæ™¯
+		glClear(GL_COLOR_BUFFER_BIT);
+
+
+		glColor4ub(255, 255, 255, 255);//è®¾ç½®å½“å‰é¢œè‰²
+
+		glPointSize(20.0f);//è®¾ç½®ç‚¹å¤§å°ï¼Œå•ä½åƒç´ 
+
+		glBegin(GL_POINTS);//å¼€å§‹ç»˜åˆ¶
+		glVertex3f(0.0f, 0.0f, -0.5f);
+		glEnd();//ç»˜åˆ¶ç»“æŸ
 
 
 
 
-        //Õ¹Ê¾³¡¾°
-        SwapBuffers(dc);
+		//å±•ç¤ºåœºæ™¯
+		SwapBuffers(dc);
 
 
-    }
+	}
 
-    return 0;
+	return 0;
 }
