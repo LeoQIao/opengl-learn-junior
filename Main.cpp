@@ -109,6 +109,7 @@ INT WINAPI WinMain(
 			DispatchMessage(&msg);
 		}
 
+		glEnable(GL_CULL_FACE);
 
 		//绘制场景
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -126,11 +127,15 @@ INT WINAPI WinMain(
 		glColor4ub(0, 0, 255, 255);
 		glVertex3f(0.0f, 0.0f, -10.0f);
 
+
+		glColor4ub(0, 255, 0, 0);
+		glVertex3f(-5.0f, -4.0f, -10.0f);//加入CULL_FACE后，使用此点作为第二个点会导致此三角形面对摄像机的面被判定为背面，因而被剔除。
+
 		glColor4ub(255, 0, 0, 0);//设置颜色
 		glVertex3f(-5.0f, 0.0f, -10.0f);
 
-		glColor4ub(0, 255, 0, 0);//线段两点之间的颜色会被插值
-		glVertex3f(-5.0f, -4.0f, -10.0f);
+		//glColor4ub(0, 255, 0, 0);//线段两点之间的颜色会被插值
+		//glVertex3f(-5.0f, -4.0f, -10.0f);
 
 		glEnd();//绘制结束
 
