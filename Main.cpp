@@ -114,21 +114,24 @@ INT WINAPI WinMain(
 		glClear(GL_COLOR_BUFFER_BIT);
 
 
-		glColor4ub(255, 255, 255, 255);//设置当前颜色
+		glColor4ub(0, 0, 255, 255);//设置当前颜色
 
 		//设置线宽度
 		glLineWidth(4.0f);
 
 		//开始绘制
-		//glBegin(GL_LINES); //GL_LINES 成对的绘制线段，如果为单数，则忽略最后一个点。
-		//glBegin(GL_LINE_STRIP); //GL_LINE_STRIP 首尾相接的绘制线段，除了最后一个点到第一个点。
-		glBegin(GL_LINE_LOOP); //GL_LINE_LOOP 首尾相接的绘制线段
 
-		glVertex3f(0.0f, 0.0f, -0.5f);
+		glBegin(GL_TRIANGLES); //GL_LINE_LOOP 首尾相接的绘制线段
+
+		glColor4ub(0, 0, 255, 255);
+		glVertex3f(0.0f, 0.0f, -10.0f);
+
 		glColor4ub(255, 0, 0, 0);//设置颜色
 		glVertex3f(-5.0f, 0.0f, -10.0f);
+
 		glColor4ub(0, 255, 0, 0);//线段两点之间的颜色会被插值
 		glVertex3f(-5.0f, -4.0f, -10.0f);
+
 		glEnd();//绘制结束
 
 
